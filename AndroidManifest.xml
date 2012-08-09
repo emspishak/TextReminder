@@ -5,10 +5,17 @@
 
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="15" />
 
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
     <application android:label="@string/app_name"
         android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme">
 
+        <receiver android:name=".TextReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
