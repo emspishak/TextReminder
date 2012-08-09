@@ -16,7 +16,7 @@ import android.util.Log;
 public class AlarmReceiver extends BroadcastReceiver {
 
     public static final Uri SMS_INBOX = Uri.parse("content://sms/inbox");
-    public static final long[] VIBRATE_PATTERN = {0, 200, 200, 200};
+    public static final long[] VIBRATE_PATTERN = {0, 250, 250, 250};
 
     @Override
     public void onReceive(Context context, Intent intent) {
