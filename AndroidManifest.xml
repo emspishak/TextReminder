@@ -16,6 +16,12 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
+        <receiver android:name=".AlarmReceiver">
+            <intent-filter>
+                <action android:name="com.hotcats.textreminder.TextReceiver.ALARM_RING" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
