@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Vibrator;
 import android.util.Log;
 
 /**
@@ -15,6 +16,7 @@ import android.util.Log;
 public class AlarmReceiver extends BroadcastReceiver {
 
     public static final Uri SMS_INBOX = Uri.parse("content://sms/inbox");
+    public static final long[] VIBRATE_PATTERN = {0, 200, 200, 200};
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -30,6 +32,9 @@ public class AlarmReceiver extends BroadcastReceiver {
             PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
             am.cancel(pi);
             Log.i("alarm", "cancelled alarm");
+        } else {
+            Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(VIBRATE_PATTERN, -1);
         }
     }
 }

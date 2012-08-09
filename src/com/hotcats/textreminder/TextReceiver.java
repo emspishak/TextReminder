@@ -12,7 +12,7 @@ import android.util.Log;
  */
 public class TextReceiver extends BroadcastReceiver {
 
-	public static final int SECOND = 1000;
+	public static final int SECOND = 3000;
 	public static final int MINUTE = 1000 * 60;
 	public static final String ALARM_RING = "com.hotcats.textreminder.TextReceiver.ALARM_RING";
 
