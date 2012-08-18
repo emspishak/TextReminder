@@ -5,9 +5,11 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 /**
@@ -15,9 +17,6 @@ import android.util.Log;
  * texts.
  */
 public class TextReceiver extends BroadcastReceiver {
-
-    public static final int SECOND = 3000;
-    public static final int MINUTE = 1000 * 60;
 
     public static final String ALARM_RING = "com.hotcats.textreminder.TextReceiver.ALARM_RING";
     public static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
@@ -36,7 +35,7 @@ public class TextReceiver extends BroadcastReceiver {
         if (ALARM_RING.equals(intent.getAction())) {
             handleAlarm(context, am, pi);
         } else if (SMS_RECEIVED.equals(intent.getAction())) {
-            handleText(am, pi);
+            handleText(context, am, pi);
         } else {
             Log.w("all", "invalid intent received: " + intent.getAction());
         }
@@ -67,10 +66,21 @@ public class TextReceiver extends BroadcastReceiver {
     /**
      * Handle receiving a text: set an alarm to alert the user.
      */
-    private void handleText(AlarmManager am, PendingIntent pi) {
+    private void handleText(Context context, AlarmManager am, PendingIntent pi) {
         Log.i("text", "text message recieved!");
 
+        // TODO: How can look this up only once instead of every time this
+        // method is called?
+        String repeatDelayDefault = context.getResources().getString(
+                R.string.pref_repeatDelay_default);
+
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        int repeatDelay = 1000 * Integer.parseInt(prefs.getString(
+                Preferences.PREF_REPEAT_DELAY, repeatDelayDefault));
+
+        Log.i("text", "setting alarm to repeat every " + repeatDelay + " ms");
         am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
-                + SECOND, SECOND, pi);
+                + repeatDelay, repeatDelay, pi);
     }
 }
