@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="pref_repeatDelay"
+        android:title="@string/pref_repeatDelay"
+        android:entries="@array/pref_repeatDelay_entries"
+        android:entryValues="@array/pref_repeatDelay_values"
+        android:defaultValue="60" />
+</PreferenceScreen>

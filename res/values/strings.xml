@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Text Reminder</string>
+    <string name="pref_repeatDelay">Repeat Delay</string>
 </resources>
