@@ -5,5 +5,5 @@
         android:title="@string/pref_repeatDelay"
         android:entries="@array/pref_repeatDelay_entries"
         android:entryValues="@array/pref_repeatDelay_values"
-        android:defaultValue="60" />
+        android:defaultValue="@string/pref_repeatDelay_default" />
 </PreferenceScreen>
