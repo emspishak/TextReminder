@@ -11,23 +11,25 @@ import android.os.Vibrator;
 import android.util.Log;
 
 /**
- * Receives text messages and alarm rings to alert the user if there are unread texts.
+ * Receives text messages and alarm rings to alert the user if there are unread
+ * texts.
  */
 public class TextReceiver extends BroadcastReceiver {
 
-	public static final int SECOND = 3000;
-	public static final int MINUTE = 1000 * 60;
+    public static final int SECOND = 3000;
+    public static final int MINUTE = 1000 * 60;
 
-	public static final String ALARM_RING = "com.hotcats.textreminder.TextReceiver.ALARM_RING";
-	public static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
+    public static final String ALARM_RING = "com.hotcats.textreminder.TextReceiver.ALARM_RING";
+    public static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
 
-	public static final Uri SMS_INBOX = Uri.parse("content://sms/inbox");
+    public static final Uri SMS_INBOX = Uri.parse("content://sms/inbox");
 
-    public static final long[] VIBRATE_PATTERN = {0, 250, 250, 250};
+    public static final long[] VIBRATE_PATTERN = { 0, 250, 250, 250 };
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager am = (AlarmManager) context
+                .getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(ALARM_RING);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
 
@@ -41,12 +43,14 @@ public class TextReceiver extends BroadcastReceiver {
     }
 
     /**
-     * Handle an alarm ring: if there are unread texts alert the user, otherwise cancel the alarm.
+     * Handle an alarm ring: if there are unread texts alert the user, otherwise
+     * cancel the alarm.
      */
     private void handleAlarm(Context context, AlarmManager am, PendingIntent pi) {
         Log.i("alarm", "alarm ring received");
 
-        Cursor c = context.getContentResolver().query(SMS_INBOX, null, "read = 0", null, null);
+        Cursor c = context.getContentResolver().query(SMS_INBOX, null,
+                "read = 0", null, null);
         int unread = c.getCount();
         c.close();
         Log.i("alarm", "found " + unread + " unread texts");
@@ -54,7 +58,8 @@ public class TextReceiver extends BroadcastReceiver {
             am.cancel(pi);
             Log.i("alarm", "cancelled alarm");
         } else {
-            Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator v = (Vibrator) context
+                    .getSystemService(Context.VIBRATOR_SERVICE);
             v.vibrate(VIBRATE_PATTERN, -1);
         }
     }
@@ -65,6 +70,7 @@ public class TextReceiver extends BroadcastReceiver {
     private void handleText(AlarmManager am, PendingIntent pi) {
         Log.i("text", "text message recieved!");
 
-        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + SECOND, SECOND, pi);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
+                + SECOND, SECOND, pi);
     }
 }
