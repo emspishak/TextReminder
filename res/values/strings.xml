@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Text Reminder</string>
+    <string name="pref_enabled">Enabled</string>
     <string name="pref_repeatDelay">Repeat Delay</string>
     <string name="pref_repeatDelay_default">60</string>
 </resources>

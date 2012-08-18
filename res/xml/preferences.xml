@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="pref_enabled"
+        android:title="@string/pref_enabled"
+        android:defaultValue="true" />
     <ListPreference
         android:key="pref_repeatDelay"
         android:title="@string/pref_repeatDelay"

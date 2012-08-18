@@ -69,18 +69,29 @@ public class TextReceiver extends BroadcastReceiver {
     private void handleText(Context context, AlarmManager am, PendingIntent pi) {
         Log.i("text", "text message recieved!");
 
-        // TODO: How can look this up only once instead of every time this
-        // method is called?
-        String repeatDelayDefault = context.getResources().getString(
-                R.string.pref_repeatDelay_default);
+        // TODO: How can look this and repeatDelay up only once instead of every
+        // time this method is called?
+        boolean enabledDefault = context.getResources().getBoolean(
+                R.bool.pref_enabled_default);
 
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        int repeatDelay = 1000 * Integer.parseInt(prefs.getString(
-                Preferences.PREF_REPEAT_DELAY, repeatDelayDefault));
 
-        Log.i("text", "setting alarm to repeat every " + repeatDelay + " ms");
-        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
-                + repeatDelay, repeatDelay, pi);
+        boolean enabled = prefs.getBoolean(Preferences.PREF_ENABLED,
+                enabledDefault);
+        if (enabled) {
+            String repeatDelayDefault = context.getResources().getString(
+                    R.string.pref_repeatDelay_default);
+
+            int repeatDelay = 1000 * Integer.parseInt(prefs.getString(
+                    Preferences.PREF_REPEAT_DELAY, repeatDelayDefault));
+
+            Log.i("text", "setting alarm to repeat every " + repeatDelay
+                    + " ms");
+            am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
+                    + repeatDelay, repeatDelay, pi);
+        } else {
+            Log.i("text", "disabled, not setting alarm");
+        }
     }
 }
