@@ -1,5 +1,7 @@
 package com.hotcats.textreminder;
 
+import android.app.AlarmManager;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
@@ -48,6 +50,13 @@ public class Preferences extends PreferenceActivity implements
 
         if (PREF_ENABLED.equals(key)) {
             newValue = sharedPreferences.getBoolean(key, enabledDefault);
+            boolean enabled = (Boolean) newValue;
+            if (!enabled) {
+                // Stop current alarm, if one is set.
+                AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                Utilities.cancelAlarm(this, am);
+                Log.i("preferences", "cancelled current alarm (if set)");
+            }
         } else if (PREF_REPEAT_DELAY.equals(key)) {
             newValue = sharedPreferences.getString(key, repeatDelayDefault);
             updateRepeatDelaySummary();
