@@ -29,8 +29,8 @@ public class TextReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         AlarmManager am = (AlarmManager) context
                 .getSystemService(Context.ALARM_SERVICE);
-        Intent i = new Intent(ALARM_RING);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
+
+        PendingIntent pi = Utilities.constructAlarmPendingIntent(context);
 
         if (ALARM_RING.equals(intent.getAction())) {
             handleAlarm(context, am, pi);
@@ -54,7 +54,7 @@ public class TextReceiver extends BroadcastReceiver {
         c.close();
         Log.i("alarm", "found " + unread + " unread texts");
         if (unread == 0) {
-            am.cancel(pi);
+            Utilities.cancelAlarm(am, pi);
             Log.i("alarm", "cancelled alarm");
         } else {
             Vibrator v = (Vibrator) context
