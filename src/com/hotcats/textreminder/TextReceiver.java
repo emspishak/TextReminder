@@ -82,8 +82,6 @@ public class TextReceiver extends BroadcastReceiver {
     private void handleText(Context context, AlarmManager am, PendingIntent pi) {
         Log.i("text", "text message recieved!");
 
-        // TODO: How can I look this and repeatDelay up only once instead of
-        // every time this method is called?
         boolean enabledDefault = context.getResources().getBoolean(
                 R.bool.pref_enabled_default);
 
