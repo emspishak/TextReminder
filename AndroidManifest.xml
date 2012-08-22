@@ -6,6 +6,7 @@
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="10" />
 
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -24,6 +25,7 @@
 
         <receiver android:name=".TextReceiver">
             <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
                 <action android:name="com.hotcats.textreminder.TextReceiver.ALARM_RING" />
             </intent-filter>
