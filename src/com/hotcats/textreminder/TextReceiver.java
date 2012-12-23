@@ -80,7 +80,7 @@ public class TextReceiver extends BroadcastReceiver {
      * Handle receiving a text: set an alarm to alert the user.
      */
     private void handleText(Context context, AlarmManager am, PendingIntent pi) {
-        Log.i("text", "text message recieved!");
+        Log.i("text", "text message received!");
 
         boolean enabledDefault = context.getResources().getBoolean(
                 R.bool.pref_enabled_default);
