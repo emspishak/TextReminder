@@ -1,6 +1,7 @@
 package com.hotcats.textreminder;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 /**
@@ -21,6 +23,7 @@ public class TextReceiver extends BroadcastReceiver {
 
     public static final String ALARM_RING = "com.hotcats.textreminder.TextReceiver.ALARM_RING";
     public static final String IDLE_PHONE_STATE = "IDLE";
+    public static final String NOTIFICATION_CLICK = "NOTIFICATION_CLICK";
     public static final String PHONE_STATE = "android.intent.action.PHONE_STATE";
     public static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
 
@@ -101,6 +104,22 @@ public class TextReceiver extends BroadcastReceiver {
                     + " ms");
             am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
                     + repeatDelay, repeatDelay, pi);
+
+            // Build up a notification for cancellation of the current text
+            // reminder
+            NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(
+                    context);
+            nBuilder.setContentTitle("Cancel current text reminder");
+            nBuilder.setAutoCancel(true);
+            nBuilder.setSmallIcon(R.drawable.ic_launcher);
+            Intent i = new Intent(context, TextReceiver.class);
+            i.setAction(NOTIFICATION_CLICK);
+            PendingIntent npi = PendingIntent.getBroadcast(context, 0, i, 0);
+            nBuilder.setContentIntent(npi);
+            NotificationManager nManager = (NotificationManager) context
+                    .getSystemService(Context.NOTIFICATION_SERVICE);
+            Log.i("text", "setting notification");
+            nManager.notify(0, nBuilder.getNotification());
         } else {
             Log.i("text", "disabled, not setting alarm");
         }
