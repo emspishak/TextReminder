@@ -1,6 +1,7 @@
 package com.hotcats.textreminder;
 
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -107,24 +108,30 @@ public class TextReceiver extends BroadcastReceiver {
             am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
                     + repeatDelay, repeatDelay, pi);
 
-            // Build up a notification for cancellation of the current text
-            // reminder
-            NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(
-                    context);
-            nBuilder.setContentTitle("Cancel current text reminder");
-            nBuilder.setAutoCancel(true);
-            nBuilder.setSmallIcon(R.drawable.ic_launcher);
-            Intent i = new Intent(context, TextReceiver.class);
-            i.setAction(NOTIFICATION_CLICK);
-            PendingIntent npi = PendingIntent.getBroadcast(context, 0, i, 0);
-            nBuilder.setContentIntent(npi);
+            Notification cancelNotification = createCancelNotification(context);
             NotificationManager nManager = (NotificationManager) context
                     .getSystemService(Context.NOTIFICATION_SERVICE);
             Log.i("text", "setting notification");
-            nManager.notify(0, nBuilder.getNotification());
+            nManager.notify(0, cancelNotification);
         } else {
             Log.i("text", "disabled, not setting alarm");
         }
+    }
+
+    /**
+     * Build up a notification for cancellation of the current text reminder
+     */
+    private Notification createCancelNotification(Context context) {
+        NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(
+                context);
+        nBuilder.setContentTitle("Cancel current text reminder");
+        nBuilder.setAutoCancel(true);
+        nBuilder.setSmallIcon(R.drawable.ic_launcher);
+        Intent i = new Intent(context, TextReceiver.class);
+        i.setAction(NOTIFICATION_CLICK);
+        PendingIntent npi = PendingIntent.getBroadcast(context, 0, i, 0);
+        nBuilder.setContentIntent(npi);
+        return nBuilder.getNotification();
     }
 
     /**
