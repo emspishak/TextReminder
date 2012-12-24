@@ -110,7 +110,7 @@ public class TextReceiver extends BroadcastReceiver {
             int repeatDelay = 1000 * Integer.parseInt(prefs.getString(
                     Preferences.PREF_REPEAT_DELAY, repeatDelayDefault));
 
-            Log.i("text", "setting alarm to repeat every " + repeatDelay
+            Log.i("alarm", "setting alarm to repeat every " + repeatDelay
                     + " ms");
             am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
                     + repeatDelay, repeatDelay, pi);
@@ -118,7 +118,7 @@ public class TextReceiver extends BroadcastReceiver {
             Notification cancelNotification = createCancelNotification(context);
             NotificationManager nManager = (NotificationManager) context
                     .getSystemService(Context.NOTIFICATION_SERVICE);
-            Log.i("text", "setting notification");
+            Log.i("notification", "setting notification");
             nManager.notify(CANCEL_NOTIFICATION_ID, cancelNotification);
         } else {
             Log.i("text", "disabled, not setting alarm");
