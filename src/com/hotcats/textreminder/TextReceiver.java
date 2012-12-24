@@ -90,9 +90,7 @@ public class TextReceiver extends BroadcastReceiver {
         Utilities.cancelAlarm(am, pi);
         Log.i("alarm", "cancelled alarm");
 
-        NotificationManager nManager = (NotificationManager) context
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-        nManager.cancel(CANCEL_NOTIFICATION_ID);
+        Utilities.cancelNotification(context);
         Log.i("notification", "cancelled notification");
     }
 

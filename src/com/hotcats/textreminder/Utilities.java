@@ -1,6 +1,7 @@
 package com.hotcats.textreminder;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -36,5 +37,14 @@ public class Utilities {
      */
     public static void cancelAlarm(AlarmManager am, PendingIntent pi) {
         am.cancel(pi);
+    }
+
+    /**
+     * Cancels the "cancel current reminders" notification.
+     */
+    public static void cancelNotification(Context context) {
+        NotificationManager nManager = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        nManager.cancel(TextReceiver.CANCEL_NOTIFICATION_ID);
     }
 }
