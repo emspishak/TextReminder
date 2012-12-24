@@ -163,11 +163,11 @@ public class TextReceiver extends BroadcastReceiver {
     }
 
     /**
-     * Handle a click on the "cancel" notification: disable alerts by cancelling
+     * Handle a click on the "cancel" notification: disable alerts by canceling
      * the alarm.
      */
     private void handleNotificationClick(AlarmManager am, PendingIntent pi) {
-        Log.i("notification", "notification clicked, cancelling alarm");
+        Log.i("notification", "notification clicked, canceling alarm");
         Utilities.cancelAlarm(am, pi);
     }
 
@@ -176,7 +176,7 @@ public class TextReceiver extends BroadcastReceiver {
      *
      * NOTE: this relies on an undocumented intent and has only been tested on a
      * stock Motorola Droid 3. The alarm and notification will still be
-     * cancelled on the alarm interval, but this cancels it as soon as the text
+     * canceled on the alarm interval, but this cancels it as soon as the text
      * is marked read.
      */
     private void handleSMSUpdated(Context context, AlarmManager am, PendingIntent pi) {
@@ -185,7 +185,7 @@ public class TextReceiver extends BroadcastReceiver {
         int unread = getUnreadCount(context);
         Log.i("sms", "found " + unread + " unread texts");
         if (unread == 0) {
-            Log.i("sms", "cancalling alarm and notification (if set)");
+            Log.i("sms", "canceling alarm and notification (if set)");
             Utilities.cancelAll(context, am, pi);
         }
     }
