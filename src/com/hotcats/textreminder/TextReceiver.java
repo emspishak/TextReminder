@@ -61,10 +61,7 @@ public class TextReceiver extends BroadcastReceiver {
     private void handleAlarm(Context context, AlarmManager am, PendingIntent pi) {
         Log.i("alarm", "alarm ring received");
 
-        Cursor c = context.getContentResolver().query(SMS_INBOX, null,
-                "read = 0", null, null);
-        int unread = c.getCount();
-        c.close();
+        int unread = getUnreadCount(context);
         Log.i("alarm", "found " + unread + " unread texts");
         if (unread == 0) {
             Utilities.cancelAlarm(am, pi);
@@ -87,6 +84,17 @@ public class TextReceiver extends BroadcastReceiver {
                 Log.i("alarm", "call active, not vibrating");
             }
         }
+    }
+
+    /**
+     * Gets the count of unread text messages.
+     */
+    private int getUnreadCount(Context context) {
+        Cursor c = context.getContentResolver().query(SMS_INBOX, null,
+                "read = 0", null, null);
+        int unread = c.getCount();
+        c.close();
+        return unread;
     }
 
     /**
