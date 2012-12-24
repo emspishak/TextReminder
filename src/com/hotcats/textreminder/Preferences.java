@@ -26,6 +26,7 @@ public class Preferences extends PreferenceActivity implements
 
     private boolean enabledDefault;
     private String repeatDelayDefault;
+    private boolean canceledNotificationEnabledDefault;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class Preferences extends PreferenceActivity implements
         Resources res = getResources();
         enabledDefault = res.getBoolean(R.bool.pref_enabled_default);
         repeatDelayDefault = res.getString(R.string.pref_repeatDelay_default);
+        canceledNotificationEnabledDefault = res.getBoolean(R.bool.pref_cancelNotificationEnabled_default);
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
@@ -55,12 +57,18 @@ public class Preferences extends PreferenceActivity implements
             if (!enabled) {
                 // Stop current alarm, if one is set.
                 AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                Utilities.cancelAlarm(this, am);
-                Log.i("preferences", "cancelled current alarm (if set)");
+                Utilities.cancelAll(this, am);
+                Log.i("preferences", "canceled current alarm and notification (if set)");
             }
         } else if (PREF_REPEAT_DELAY.equals(key)) {
             newValue = sharedPreferences.getString(key, repeatDelayDefault);
             updateRepeatDelaySummary();
+        } else if (PREF_CANCEL_NOTIFICATION_ENABLED.equals(key)) {
+            newValue = sharedPreferences.getBoolean(key, canceledNotificationEnabledDefault);
+            boolean enabled = (Boolean) newValue;
+            if (!enabled) {
+                Utilities.cancelNotification(this);
+            }
         }
 
         Log.i("preferences", "preference " + key + " changed to " + newValue);

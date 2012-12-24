@@ -57,4 +57,11 @@ public class Utilities {
 
         cancelNotification(context);
     }
+
+    /**
+     * Cancels alarm and notification.
+     */
+    public static void cancelAll(Context context, AlarmManager am) {
+        cancelAll(context, am, constructAlarmPendingIntent(context));
+    }
 }
