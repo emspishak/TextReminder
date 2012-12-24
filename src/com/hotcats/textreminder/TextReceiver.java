@@ -44,6 +44,8 @@ public class TextReceiver extends BroadcastReceiver {
             handleText(context, am, pi);
         } else if (PHONE_STATE.equals(intent.getAction())) {
             handlePhoneState(context, intent);
+        } else if (NOTIFICATION_CLICK.equals(intent.getAction())) {
+            handleNotificationClick(am, pi);
         } else {
             Log.w("all", "invalid intent received: " + intent.getAction());
         }
@@ -138,5 +140,14 @@ public class TextReceiver extends BroadcastReceiver {
         Editor editor = prefs.edit();
         editor.putString(PHONE_STATE, phoneState);
         editor.commit();
+    }
+
+    /**
+     * Handle a click on the "cancel" notification: disable alerts by cancelling
+     * the alarm.
+     */
+    private void handleNotificationClick(AlarmManager am, PendingIntent pi) {
+        Log.i("notification", "notification clicked, cancelling alarm");
+        Utilities.cancelAlarm(am, pi);
     }
 }
