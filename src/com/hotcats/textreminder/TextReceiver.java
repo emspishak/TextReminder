@@ -27,6 +27,7 @@ public class TextReceiver extends BroadcastReceiver {
     public static final String NOTIFICATION_CLICK = "NOTIFICATION_CLICK";
     public static final String PHONE_STATE = "android.intent.action.PHONE_STATE";
     public static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
+    public static final String SMS_UPDATED = "com.motorola.android.intent.action.SMS_UPDATED";
 
     public static final int CANCEL_NOTIFICATION_ID = 132;
 
@@ -49,6 +50,8 @@ public class TextReceiver extends BroadcastReceiver {
             handlePhoneState(context, intent);
         } else if (NOTIFICATION_CLICK.equals(intent.getAction())) {
             handleNotificationClick(am, pi);
+        } else if (SMS_UPDATED.equals(intent.getAction())) {
+            handleSMSUpdated(context, am, pi);
         } else {
             Log.w("all", "invalid intent received: " + intent.getAction());
         }
@@ -178,5 +181,23 @@ public class TextReceiver extends BroadcastReceiver {
     private void handleNotificationClick(AlarmManager am, PendingIntent pi) {
         Log.i("notification", "notification clicked, cancelling alarm");
         Utilities.cancelAlarm(am, pi);
+    }
+
+    /**
+     * Handle an SMS_UPDATED intent: cancel alarm and notification.
+     *
+     * NOTE: this relies on an undocumented intent and has only been tested on a
+     * stock Motorola Droid 3. The alarm and notification will still be
+     * cancelled on the alarm interval, but this cancels it as soon as the text
+     * is marked read.
+     */
+    private void handleSMSUpdated(Context context, AlarmManager am, PendingIntent pi) {
+        Log.i("sms", "SMS_UPDATE intent received");
+
+        int unread = getUnreadCount(context);
+        Log.i("sms", "found " + unread + " unread texts");
+        if (unread == 0) {
+            cancelAll(context, am, pi);
+        }
     }
 }

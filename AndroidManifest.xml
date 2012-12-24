@@ -28,6 +28,7 @@
                 <action android:name="android.intent.action.PHONE_STATE" />
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
                 <action android:name="com.hotcats.textreminder.TextReceiver.ALARM_RING" />
+                <action android:name="com.motorola.android.intent.action.SMS_UPDATED" />
             </intent-filter>
         </receiver>
     </application>
