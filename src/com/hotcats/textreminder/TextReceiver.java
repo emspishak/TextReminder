@@ -69,6 +69,11 @@ public class TextReceiver extends BroadcastReceiver {
         if (unread == 0) {
             Utilities.cancelAlarm(am, pi);
             Log.i("alarm", "cancelled alarm");
+
+            NotificationManager nManager = (NotificationManager) context
+                    .getSystemService(Context.NOTIFICATION_SERVICE);
+            nManager.cancel(CANCEL_NOTIFICATION_ID);
+            Log.i("notification", "cancelled notification");
         } else {
             SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(context);
