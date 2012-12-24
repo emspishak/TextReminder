@@ -67,7 +67,7 @@ public class TextReceiver extends BroadcastReceiver {
         int unread = getUnreadCount(context);
         Log.i("alarm", "found " + unread + " unread texts");
         if (unread == 0) {
-            cancelAll(context, am, pi);
+            Utilities.cancelAll(context, am, pi);
         } else {
             SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(context);
@@ -81,17 +81,6 @@ public class TextReceiver extends BroadcastReceiver {
                 Log.i("alarm", "call active, not vibrating");
             }
         }
-    }
-
-    /**
-     * Cancels alarm and notification.
-     */
-    private void cancelAll(Context context, AlarmManager am, PendingIntent pi) {
-        Utilities.cancelAlarm(am, pi);
-        Log.i("alarm", "cancelled alarm");
-
-        Utilities.cancelNotification(context);
-        Log.i("notification", "cancelled notification");
     }
 
     /**
@@ -195,7 +184,7 @@ public class TextReceiver extends BroadcastReceiver {
         int unread = getUnreadCount(context);
         Log.i("sms", "found " + unread + " unread texts");
         if (unread == 0) {
-            cancelAll(context, am, pi);
+            Utilities.cancelAll(context, am, pi);
         }
     }
 }

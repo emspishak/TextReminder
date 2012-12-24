@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 /**
  * Various static utility functions.
@@ -46,5 +47,16 @@ public class Utilities {
         NotificationManager nManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         nManager.cancel(TextReceiver.CANCEL_NOTIFICATION_ID);
+    }
+
+    /**
+     * Cancels alarm and notification.
+     */
+    public static void cancelAll(Context context, AlarmManager am, PendingIntent pi) {
+        cancelAlarm(am, pi);
+        Log.i("alarm", "cancelled alarm");
+
+        cancelNotification(context);
+        Log.i("notification", "cancelled notification");
     }
 }
