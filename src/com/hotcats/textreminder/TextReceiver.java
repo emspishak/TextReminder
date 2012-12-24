@@ -64,13 +64,7 @@ public class TextReceiver extends BroadcastReceiver {
         int unread = getUnreadCount(context);
         Log.i("alarm", "found " + unread + " unread texts");
         if (unread == 0) {
-            Utilities.cancelAlarm(am, pi);
-            Log.i("alarm", "cancelled alarm");
-
-            NotificationManager nManager = (NotificationManager) context
-                    .getSystemService(Context.NOTIFICATION_SERVICE);
-            nManager.cancel(CANCEL_NOTIFICATION_ID);
-            Log.i("notification", "cancelled notification");
+            cancelAll(context, am, pi);
         } else {
             SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(context);
@@ -84,6 +78,19 @@ public class TextReceiver extends BroadcastReceiver {
                 Log.i("alarm", "call active, not vibrating");
             }
         }
+    }
+
+    /**
+     * Cancels alarm and notification.
+     */
+    private void cancelAll(Context context, AlarmManager am, PendingIntent pi) {
+        Utilities.cancelAlarm(am, pi);
+        Log.i("alarm", "cancelled alarm");
+
+        NotificationManager nManager = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        nManager.cancel(CANCEL_NOTIFICATION_ID);
+        Log.i("notification", "cancelled notification");
     }
 
     /**
