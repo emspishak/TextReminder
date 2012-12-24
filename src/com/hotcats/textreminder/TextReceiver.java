@@ -28,6 +28,8 @@ public class TextReceiver extends BroadcastReceiver {
     public static final String PHONE_STATE = "android.intent.action.PHONE_STATE";
     public static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
 
+    public static final int CANCEL_NOTIFICATION_ID = 132;
+
     public static final Uri SMS_INBOX = Uri.parse("content://sms/inbox");
 
     public static final long[] VIBRATE_PATTERN = { 0, 250, 250, 250 };
@@ -112,7 +114,7 @@ public class TextReceiver extends BroadcastReceiver {
             NotificationManager nManager = (NotificationManager) context
                     .getSystemService(Context.NOTIFICATION_SERVICE);
             Log.i("text", "setting notification");
-            nManager.notify(0, cancelNotification);
+            nManager.notify(CANCEL_NOTIFICATION_ID, cancelNotification);
         } else {
             Log.i("text", "disabled, not setting alarm");
         }
