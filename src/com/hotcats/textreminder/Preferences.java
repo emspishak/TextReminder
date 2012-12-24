@@ -20,6 +20,7 @@ public class Preferences extends PreferenceActivity implements
 
     public static final String PREF_ENABLED = "pref_enabled";
     public static final String PREF_REPEAT_DELAY = "pref_repeatDelay";
+    public static final String PREF_CANCEL_NOTIFICATION_ENABLED = "pref_cancelNotificationEnabled";
 
     private ListPreference repeatDelayPreference;
 

@@ -121,11 +121,18 @@ public class TextReceiver extends BroadcastReceiver {
             am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
                     + repeatDelay, repeatDelay, pi);
 
-            Notification cancelNotification = createCancelNotification(context);
-            NotificationManager nManager = (NotificationManager) context
-                    .getSystemService(Context.NOTIFICATION_SERVICE);
-            Log.i("notification", "setting notification");
-            nManager.notify(CANCEL_NOTIFICATION_ID, cancelNotification);
+            boolean cancelNotificationEnabledDefault = context.getResources()
+                    .getBoolean(R.bool.pref_cancelNotificationEnabled_default);
+            boolean cancelNotificationEnabled = prefs.getBoolean(
+                    Preferences.PREF_CANCEL_NOTIFICATION_ENABLED,
+                    cancelNotificationEnabledDefault);
+            if (cancelNotificationEnabled) {
+                Notification cancelNotification = createCancelNotification(context);
+                NotificationManager nManager = (NotificationManager) context
+                        .getSystemService(Context.NOTIFICATION_SERVICE);
+                Log.i("notification", "setting notification");
+                nManager.notify(CANCEL_NOTIFICATION_ID, cancelNotification);
+            }
         } else {
             Log.i("text", "disabled, not setting alarm");
         }

@@ -1,3 +1,4 @@
 <resources>
     <item name="pref_enabled_default" type="bool">true</item>
+    <item name="pref_cancelNotificationEnabled_default" type="bool">true</item>
 </resources>

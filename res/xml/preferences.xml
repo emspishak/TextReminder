@@ -10,4 +10,9 @@
         android:entries="@array/pref_repeatDelay_entries"
         android:entryValues="@array/pref_repeatDelay_values"
         android:defaultValue="@string/pref_repeatDelay_default" />
+    <CheckBoxPreference
+        android:key="pref_cancelNotificationEnabled"
+        android:title="@string/pref_cancelNotificationEnabled"
+        android:summary="@string/pref_cancelNotificationSummary"
+        android:defaultValue="true" />
 </PreferenceScreen>

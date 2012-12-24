@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Text Reminder</string>
     <string name="pref_enabled">Enabled</string>
+    <string name="pref_cancelNotificationEnabled">Cancel notification enabled</string>
+    <string name="pref_cancelNotificationSummary">Display an Android notification that when clicked will cancel all current reminders.</string>
     <string name="pref_repeatDelay">Repeat Delay</string>
     <string name="pref_repeatDelay_default">60</string>
 </resources>
