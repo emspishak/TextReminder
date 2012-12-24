@@ -50,7 +50,8 @@ public class Utilities {
     }
 
     /**
-     * Cancels alarm and notification.
+     * Cancels alarm and notification. Note that the PendingIntent must be
+     * created with the {@link #constructAlarmPendingIntent(Context)} method.
      */
     public static void cancelAll(Context context, AlarmManager am, PendingIntent pi) {
         cancelAlarm(am, pi);
