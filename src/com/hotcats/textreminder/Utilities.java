@@ -54,9 +54,7 @@ public class Utilities {
      */
     public static void cancelAll(Context context, AlarmManager am, PendingIntent pi) {
         cancelAlarm(am, pi);
-        Log.i("alarm", "cancelled alarm");
 
         cancelNotification(context);
-        Log.i("notification", "cancelled notification");
     }
 }

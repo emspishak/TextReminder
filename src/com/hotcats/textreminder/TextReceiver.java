@@ -67,6 +67,7 @@ public class TextReceiver extends BroadcastReceiver {
         int unread = getUnreadCount(context);
         Log.i("alarm", "found " + unread + " unread texts");
         if (unread == 0) {
+            Log.i("alarm", "cancalling alarm and notification (if set)");
             Utilities.cancelAll(context, am, pi);
         } else {
             SharedPreferences prefs = PreferenceManager
@@ -184,6 +185,7 @@ public class TextReceiver extends BroadcastReceiver {
         int unread = getUnreadCount(context);
         Log.i("sms", "found " + unread + " unread texts");
         if (unread == 0) {
+            Log.i("sms", "cancalling alarm and notification (if set)");
             Utilities.cancelAll(context, am, pi);
         }
     }
