@@ -67,7 +67,7 @@ public class TextReceiver extends BroadcastReceiver {
         int unread = getUnreadCount(context);
         Log.i("alarm", "found " + unread + " unread texts");
         if (unread == 0) {
-            Log.i("alarm", "cancalling alarm and notification (if set)");
+            Log.i("alarm", "cancelling alarm and notification (if set)");
             Utilities.cancelAll(context, am, pi);
         } else {
             SharedPreferences prefs = PreferenceManager
