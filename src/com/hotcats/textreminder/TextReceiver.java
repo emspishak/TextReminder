@@ -88,11 +88,18 @@ public class TextReceiver extends BroadcastReceiver {
      * Gets the count of unread text messages.
      */
     private int getUnreadCount(Context context) {
-        Cursor c = context.getContentResolver().query(SMS_INBOX, null,
-                "read = 0", null, null);
+        Cursor c = getTextCursor(context);
         int unread = c.getCount();
         c.close();
         return unread;
+    }
+
+    /**
+     * Gets a cursor over SMS messages.
+     */
+    private Cursor getTextCursor(Context context) {
+        return context.getContentResolver().query(SMS_INBOX, null,
+                "read = 0", null, null);
     }
 
     /**
