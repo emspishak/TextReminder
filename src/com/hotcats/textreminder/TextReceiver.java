@@ -27,6 +27,7 @@ public class TextReceiver extends BroadcastReceiver {
     public static final String NOTIFICATION_CLICK = "NOTIFICATION_CLICK";
     public static final String PHONE_STATE = "android.intent.action.PHONE_STATE";
     public static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
+    public static final String MMS_RECEIVED = "android.provider.Telephony.WAP_PUSH_RECEIVED";
     public static final String SMS_UPDATED = "com.motorola.android.intent.action.SMS_UPDATED";
 
     public static final int CANCEL_NOTIFICATION_ID = 132;
@@ -44,7 +45,8 @@ public class TextReceiver extends BroadcastReceiver {
 
         if (ALARM_RING.equals(intent.getAction())) {
             handleAlarm(context, am, pi);
-        } else if (SMS_RECEIVED.equals(intent.getAction())) {
+        } else if (SMS_RECEIVED.equals(intent.getAction())
+                || MMS_RECEIVED.equals(intent.getAction())) {
             handleText(context, am, pi);
         } else if (PHONE_STATE.equals(intent.getAction())) {
             handlePhoneState(context, intent);
